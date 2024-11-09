@@ -1,0 +1,25 @@
+<!-- templates/weather/recommendation.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 날씨에 맞는 옷차림 추천</title>
+</head>
+<body>
+    <h1>오늘의 날씨에 맞는 옷차림 추천</h1>
+    <p>현재 온도: {{ temperature }}°C</p>
+    <p>날씨 조건: {{ conditions }}</p>
+    <p>풍속: {{ wind_speed }} m/s</p>
+    <p>습도: {{ humidity }}%</p>
+    <p>강수량: {{ precipitation }} mm</p>
+    
+    <h2>추천된 옷차림</h2>
+    <ul>
+        {% for outfit in outfits %}
+            <li>{{ outfit.category }} - {{ outfit.name }} ({{ outfit.get_warmth_level_display }})</li>
+        {% empty %}
+            <p>추천된 옷차림이 없습니다.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
