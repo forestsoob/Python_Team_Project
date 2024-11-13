@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>불호 아이템 설문</title>
+</head>
+<body>
+    <h2>불호인 옷을 선택하세요</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for outfit in outfits %}
+            <label>
+                <input type="checkbox" name="dislike" value="{{ outfit.id }}">
+                {{ outfit.category }} - {{ outfit.name }}
+            </label><br>
+        {% endfor %}
+        <button type="submit">선택 완료</button>
+    </form>
+</body>
+</html>

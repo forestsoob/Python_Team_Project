@@ -1,6 +1,6 @@
-# views.py
 from django.shortcuts import render
-from .models import Outfit, UserPreference, WeatherRecord
+from .models import Outfit, UserPreference
+from survey.models import Dislike  # 불호 아이템 모델 추가
 from django.conf import settings
 from pyowm import OWM
 
@@ -25,30 +25,33 @@ def get_weather_data(city="Seoul"):
 
 def recommend_outfit(request):
     if request.user.is_authenticated:
-        # 로그인된 사용자의 경우 UserPreference 불러오기
+        # 로그인된 사용자의 경우 UserPreference 및 불호 아이템 불러오기
         user_pref, created = UserPreference.objects.get_or_create(user_id=request.user.id)
         avoid_categories = user_pref.avoid_categories.all()
+        disliked_outfit_ids = Dislike.objects.filter(user=request.user).values_list('outfit_id', flat=True)
     else:
         # 비로그인 사용자의 경우 기본 설정 사용
         avoid_categories = []  # 빈 리스트로 설정하여 오류 방지
-    
+        disliked_outfit_ids = []  # 비로그인 사용자는 불호 아이템 설정 없음
+
     weather_data = get_weather_data()
     temperature = weather_data['temperature']
     conditions = weather_data['status']
 
     # 기온에 따른 기본 추천 Level
     warmth_level = 1 if temperature >= 30 else 2 if temperature >= 23 else 3 if temperature >= 15 else 4 if temperature >= 5 else 5
-    
+
     # 특수 조건 적용 (비, 눈, 바람 등)
     if 'rain' in conditions.lower():
         warmth_level += 1
     elif 'snow' in conditions.lower():
         warmth_level += 2
 
-    # 추천할 옷 필터링 (사용자가 피하고 싶은 종류 제외)
+    # 추천할 옷 필터링 (사용자가 피하고 싶은 종류 및 불호 아이템 제외)
     exclude_ids = avoid_categories.values_list('id', flat=True) if hasattr(avoid_categories, 'values_list') else []
+    exclude_ids = list(exclude_ids) + list(disliked_outfit_ids)  # 불호 아이템과 피하고 싶은 카테고리 아이템 결합
     recommended_outfits = Outfit.objects.filter(warmth_level=warmth_level).exclude(id__in=exclude_ids)
-    
+
     return render(request, 'weather/recommendation.html', {
         'outfits': recommended_outfits,
         'temperature': temperature,

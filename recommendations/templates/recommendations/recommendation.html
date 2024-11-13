@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 옷 추천</title>
+</head>
+<body>
+    <h1>오늘의 옷 추천</h1>
+
+    <p>현재 기온: {{ temperature }}°C</p>
+    <p>날씨 상태: {{ conditions }}</p>
+    <p>바람 속도: {{ wind_speed }}m/s</p>
+    <p>습도: {{ humidity }}%</p>
+    <p>강수량: {{ precipitation }}mm</p>
+
+    <h2>추천된 옷</h2>
+    {% if outfits %}
+        <div>
+            {% for outfit in outfits %}
+                <div>
+                    <h3>{{ outfit.get_category_display }} - {{ outfit.name }}</h3>
+                    <p>적정 온도: {{ outfit.get_warmth_level_display }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>추천할 옷이 없습니다.</p>
+    {% endif %}
+
+    <h2>피드백을 남겨주세요</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">피드백 제출</button>
+    </form>
+</body>
+</html>
