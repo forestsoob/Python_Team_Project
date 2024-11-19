@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 옷 올리기</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- 상단 네비게이션 -->
+    <header>
+        <div class="nav">
+            <img src="{% static 'images/logo.png' %}" alt="On Fit" class="logo">
+            <button onclick="location.href='{% url 'logout' %}'" class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <section class="weather-info">
+            <h1>오늘 <strong>장충동</strong>의 날씨는</h1>
+            <ul>
+                <li>현재 온도: <strong>{{ weather.temperature }}°C</strong></li>
+                <li>날씨 조건: <strong>{{ weather.conditions }}</strong></li>
+                <li>풍속: <strong>{{ weather.wind_speed }}m/s</strong></li>
+                <li>습도: <strong>{{ weather.humidity }}%</strong></li>
+                <li>강수량: <strong>{{ weather.precipitation }}%</strong></li>
+            </ul>
+        </section>
+
+        <section class="outfit-recommendation">
+            <h2>On Fit한 옷 추천</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <label for="condition">오늘의 컨디션은 어떠신가요?</label>
+                    <div class="button-group">
+                        <button type="button" class="condition-button">보통</button>
+                        <button type="button" class="condition-button selected">감기</button>
+                    </div>
+                </div>
+                <div>
+                    <label for="activity">오늘은 어디서 주로 활동하시나요?</label>
+                    <div class="button-group">
+                        <button type="button" class="activity-button">실내</button>
+                        <button type="button" class="activity-button selected">야외</button>
+                    </div>
+                </div>
+                <div>
+                    <label for="ootd_photo">오늘의 OOTD 올리기</label>
+                    <input type="file" name="ootd_photo" id="ootd_photo" accept="image/*">
+                </div>
+                <button type="submit" class="submit-button">OK</button>
+            </form>
+        </section>
+    </main>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .logo {
+            height: 40px;
+        }
+        .logout-button {
+            background-color: #3B7EE2;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .weather-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .outfit-recommendation {
+            padding: 20px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .condition-button,
+        .activity-button {
+            background-color: #E3E3E3;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .condition-button.selected,
+        .activity-button.selected {
+            background-color: #3B7EE2;
+            color: white;
+        }
+        .submit-button {
+            background-color: #FF7D4B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0;
+        }
+    </style>
+</body>
+</html>

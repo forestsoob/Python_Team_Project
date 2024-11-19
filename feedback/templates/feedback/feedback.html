@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- 상단 네비게이션 -->
+    <header>
+        <div class="nav">
+            <img src="{% static 'images/logo.png' %}" alt="On Fit" class="logo">
+            <button onclick="location.href='{% url 'logout' %}'" class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <!-- 오늘의 날씨 -->
+        <section class="weather-info">
+            <h1>오늘 <span class="highlight">장충동</span>의 날씨는</h1>
+            <ul>
+                <li>현재 온도: <strong>{{ weather.temperature }}°C</strong></li>
+                <li>날씨 조건: <strong>{{ weather.conditions }}</strong></li>
+                <li>풍속: <strong>{{ weather.wind_speed }}m/s</strong></li>
+                <li>습도: <strong>{{ weather.humidity }}%</strong></li>
+                <li>강수량: <strong>{{ weather.precipitation }}%</strong></li>
+            </ul>
+        </section>
+
+        <!-- 옷 추천 -->
+        <section class="outfit-recommendation">
+            <h2>On Fit한 옷 추천</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <label>오늘의 옷 추천 만족도</label>
+                    <div class="feedback-icons">
+                        <button type="button" class="icon-button" onclick="selectFeedback(this)">&#128577;</button>
+                        <button type="button" class="icon-button" onclick="selectFeedback(this)">&#128528;</button>
+                        <button type="button" class="icon-button" onclick="selectFeedback(this)">&#128516;</button>
+                    </div>
+                </div>
+                <div>
+                    <label for="ootd_photo">오늘의 OOTD 업로드 하기</label>
+                    <div class="ootd-upload-container">
+                        <label for="ootd_photo" class="upload-button">+</label>
+                        <input type="file" name="ootd_photo" id="ootd_photo" accept="image/*" style="display:none;" onchange="previewImage(event)">
+                        <img id="preview" src="{% if user.userprofile.ootd_photo %}{{ user.userprofile.ootd_photo.url }}{% endif %}" alt="OOTD 사진" class="ootd-preview">
+                    </div>
+                </div>
+                <button type="submit" class="submit-button">OK</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // 이모티콘 선택
+        function selectFeedback(button) {
+            const allButtons = document.querySelectorAll('.icon-button');
+            allButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        // 이미지 미리보기
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+/* 공통 스타일 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto, 'Noto Sans KR', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: #4e4e4e;
+}
+
+a {
+    color: #4e4e4e;
+}
+
+input {
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    font-size: 14px;
+    padding: 11px 15px;
+}
+
+input::placeholder {
+    color: #ababab;
+}
+
+button {
+    background-color: #3B7EE2;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* 오류 메시지 스타일 */
+.invalid {
+    color: #da382b;
+}
+
+.invalid > input {
+    border-color: #da382b;
+    color: #da382b;
+}
+
+.error-message {
+    display: none; 
+    font-size: 12px;
+    text-align: right;
+}
+
+.invalid .error-message {
+    display: block;
+}
+
+/* 네비게이션 바 */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #e5e5e5;
+    height: 60px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    height: 40px;
+}
+
+.logout-button {
+    background-color: #3B7EE2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 날씨 정보 */
+.weather-info {
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+.weather-info .highlight {
+    color: #FF7A00; /* 지역 이름 강조 */
+    font-weight: bold;
+}
+
+/* 옷 추천 */
+.outfit-recommendation {
+    padding: 20px;
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+.feedback-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.icon-button {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.icon-button.selected {
+    opacity: 1;
+    transform: scale(1.2);
+    background-color: #FF7A00;
+    color: white;
+}
+
+/* OOTD 업로드 */
+.ootd-upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.upload-button {
+    font-size: 24px;
+    border: 2px dashed #FF7A00;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #FF7A00;
+}
+
+.ootd-preview {
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* 제출 버튼 */
+.submit-button {
+    background-color: #FF7A00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+/* 회원가입 폼 스타일 */
+#register-form {
+    margin: 140px auto;
+    width: 350px;
+}
+
+#register-title {
+    font-size: 30px;
+    text-align: center;
+}
+
+#register-form label {
+    display: block;
+    margin: 24px 0 8px;
+}
+
+#register-form input {
+    display: block;
+    margin: 8px 0;
+    width: 100%;
+}
+
+#register-form button {
+    display: block;
+    margin: 24px 0;
+    width: 100%;
+}
+
+/* 로그인 폼 스타일 */
+#login-form {
+    margin: 140px auto;
+    width: 350px;
+}
+
+#login-title {
+    font-size: 30px;
+    text-align: center;
+}
+
+#login-form label {
+    display: block;
+    margin: 24px 0 8px;
+}
+
+#login-form input {
+    display: block;
+    margin: 8px 0;
+    width: 100%;
+}
+
+#login-form button {
+    display: block;
+    margin: 24px 0;
+    width: 100%;
+}
+
+.login-message {
+    color: #ababab;
+    margin: 24px 0;
+    text-align: center;
+}

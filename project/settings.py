@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'users',
     'survey',
     'recommendations',
+    'feedback',
 ]
 
 MIDDLEWARE = [
@@ -88,10 +89,23 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # static 파일 경로 설정
+]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Weather API Key
 WEATHER_API_KEY = config('WEATHER_API_KEY')  # 날씨 API 키 환경변수 로드
+
+
+LOGIN_URL = '/users/login/'  # 로그인 URL을 /users/login/으로 변경
+LOGIN_REDIRECT_URL = '/feedback/'  # 로그인 후 이동할 기본 URL 설정
+LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 이동할 기본 URL 설정 (선택사항)

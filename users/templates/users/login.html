@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <form id="login-form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <h1 id="login-title">로그인</h1>
+    <div id="username-field">
+        <label for="username">ID</label>
+        <input id="username" name="username" type="text" placeholder="아이디" required>
+        <div class="error-message"></div>
+    </div>
+    
+    <div id="password-field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="비밀번호" required>
+        <div class="error-message"></div>
+    </div>
+    <button type="submit">Login</button>
+    <div class="register-message">
+        계정이 없으신가요? <a href="{% url 'signup' %}">회원가입</a>
+    </div>
+    </form>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
